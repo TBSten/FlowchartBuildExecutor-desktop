@@ -1,9 +1,14 @@
 export interface IElectronAPI {
-  update: (count: number) => void;
+  toggleDevTools: Function,
+  saveDataLocal: Function,
+  loadDataLocal: Function,
 }
 
 declare global {
   interface Window {
     myAPI: IElectronAPI;
+    showDebug: Function;
   }
 }
+
+

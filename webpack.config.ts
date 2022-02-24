@@ -1,6 +1,7 @@
 import { Configuration } from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
 
 const isDev = process.env.NODE_ENV === 'development';
 
@@ -8,6 +9,7 @@ const common: Configuration = {
   mode: isDev ? 'development' : 'production',
   resolve: {
     extensions: ['.js', '.ts', '.jsx', '.tsx', '.json'],
+    plugins: [new TsconfigPathsPlugin({ baseUrl: "." })]
   },
   externals: ['fsevents'],
   output: {

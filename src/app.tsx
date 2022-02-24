@@ -1,33 +1,36 @@
-import React, { useState, useEffect } from 'react';
+
+
+import CssBaseline from '@mui/material/CssBaseline';
+import React from 'react';
 import ReactDOM from 'react-dom';
-import './styles.css';
+import { Provider } from 'react-redux';
+import Application from './Application';
+import { store } from './redux/store';
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
+import { CacheProvider, } from "@emotion/react";
+import createCache from "@emotion/cache";
 
-const { myAPI } = window;
+import "src/style/global.css";
 
-const App = () => {
-  const [count, setCount] = useState(0);
 
-  const onCountUp = () => setCount((count) => count + 1);
-  const onCountDown = () => setCount((count) => count - 1);
-
-  useEffect(() => {
-    myAPI.update(count);
-  }, [count]);
-
-  return (
-    <div className="container">
-      <h1>{count}</h1>
-      <div>
-        <button onClick={onCountDown}>&#x25BC;</button>
-        <button onClick={onCountUp}>&#x25B2;</button>
-      </div>
-    </div>
-  );
-};
+const nonce = document.head.querySelector('[property~=csp-nonce][content]')?.getAttribute('content') as string;
+const cache = createCache({
+  key: 'my-prefix-key',
+  prepend: true,
+  nonce,
+});
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <CacheProvider value={cache}>
+    <React.StrictMode>
+      <DndProvider backend={HTML5Backend}>
+        <CssBaseline />
+        <Provider store={store}>
+          <Application />
+        </Provider>
+      </DndProvider>
+    </React.StrictMode>
+  </CacheProvider>,
   document.getElementById('root')
 );

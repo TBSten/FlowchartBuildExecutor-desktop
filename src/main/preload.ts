@@ -1,5 +1,11 @@
 import { contextBridge, ipcRenderer } from 'electron';
 
-contextBridge.exposeInMainWorld('myAPI', {
-  update: (count: number) => ipcRenderer.send('update-title', count),
-});
+const api: Window["myAPI"] = {
+  toggleDevTools: async () => await ipcRenderer.invoke("toggleDevTools"),
+  saveDataLocal: async (data: unknown) => await ipcRenderer.invoke("saveDataLocal", data),
+  loadDataLocal: async (data: unknown) => await ipcRenderer.invoke("loadDataLocal", data),
+};
+contextBridge.exposeInMainWorld('myAPI', api);
+
+
+

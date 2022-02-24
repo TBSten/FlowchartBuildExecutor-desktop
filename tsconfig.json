@@ -4,12 +4,18 @@
     "module": "ESNext",
     "esModuleInterop": true,
     "moduleResolution": "Node",
-    "jsx": "react",
-    "strict": true
+    "lib": [
+      "DOM",
+      "ESNext"
+    ],
+    "strict": true,
+    "sourceMap": true,
+    "jsx": "react-jsx",
+    "baseUrl": "."
   },
   "ts-node": {
     "compilerOptions": {
-      "target": "ESNext",
+      "target": "ES2015",
       "module": "CommonJS"
     }
   }
